@@ -4,7 +4,7 @@ const Recipe = require("./models/Recipe"); // Подключаем модель 
 const MONGO_URI = "mongodb+srv://assbreaker2023:hello123@cluster0.1enst.mongodb.net/hello?retryWrites=true&w=majority";
 
 mongoose.connect(MONGO_URI)
-    .then(() => console.log("✅ Подключено к MongoDB"))
+    .then(() => console.log("Подключено к MongoDB"))
     .catch(err => console.error("Ошибка подключения:", err));
 
 const seedRecipes = [
@@ -104,10 +104,10 @@ async function seedDB() {
     try {
         await Recipe.deleteMany(); // Очистка базы перед добавлением новых данных
         await Recipe.insertMany(seedRecipes);
-        console.log("✅ База данных заполнена тестовыми рецептами!");
+        console.log("База данных заполнена тестовыми рецептами!");
         mongoose.connection.close();
     } catch (error) {
-        console.error("❌ Ошибка при заполнении базы данных:", error);
+        console.error("Ошибка при заполнении базы данных:", error);
     }
 }
 

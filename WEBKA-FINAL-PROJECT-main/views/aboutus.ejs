@@ -6,11 +6,13 @@
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <title>Main Page</title>
-    <link rel="stylesheet" href="/profile.css">
-    <link rel="stylesheet" href="/sidebar.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/aboutus.css">
+    <title>About us</title>
+
 </head>
-<body>
+<body class="day">
     <aside id="sidebar">
         <div class="d-flex">
             <button class="toggle-btn" type="button">
@@ -97,58 +99,62 @@
     
 
 
-    <div class="content">
-        <div class="container">
-            <header>
-                <h1>Welcome to the User Preferences App</h1>
-                <h1>Profile Page</h1>
-            </header>
-            <img src="https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg" alt="Avatar" class="avatar">
-            
-       
-            <main>
-               
-
-                <div>
-                    <p><strong>Name:</strong> <%= user.name %></p>
-                    <p><strong>Email:</strong> <%= user.email %></p>
-                    <p><strong>Age:</strong> <%= user.age %></p>
-
-                    <p><strong>Profile Picture:</strong></p>
-                    <% if (user.profilePicture) { %>
-                        <img src="<%= user.profilePicture %>" alt="Profile Picture" style="max-width: 200px; max-height: 200px;">
-                    <% } else { %>
-                        <p>No profile picture uploaded.</p>
-                    <% } %>
-                </div>
-                <section id="favorites">
-                    <h2>Your Favorites</h2>
-                    <% if (favorites && favorites.length > 0) { %>
-                        <ul>
-                            <% favorites.forEach(fav => { %>
-                                <li><%= fav.recipeName %></li>
-                            <% }) %>
-                        </ul>
-                    <% } else { %>
-                        <p>You have no favorites yet.</p>
-                    <% } %>
-                </section>
-                
-            </main>
-            <a href="#" id="logoutBtn" style="display: none;" class="btn">Logout</a>
+  <div class="content">
+    <div class="container">
+        <div class="heading">
+            <h1>About us</h1>
+            <p>Welcome to our recipe sharing website! You can find recipes for many western cuisines here with detailed grocery lists and how it should be prepared. </p>
+        </div>
+        <div class="main-aboutus">
+            <section class="about">
+                    <div class="about-image">
+                        <img src="uploads/istockphoto-1081422898-612x612.jpg" alt="">
+                    </div>
+                    <div class="about-content">
+                        <h2>Developers</h2>
+                        <p>Welcome to Recipe sharing website! We’re passionate about making cooking fun, and accessible for everyone. Our easy-to-follow recipes are designed to inspire, whether you’re whipping up a quick meal or trying something new. Each recipe is tested to ensure it's delicious and achievable with everyday ingredients. Join our community of food lovers and let’s make cooking an enjoyable part of your life!</p>
+                        <button id="readMoreBtn" style="border-radius: 10px;">Read More</button>
+                        <div id="moreContent" style="display: none; margin-top: 10px;padding: 10px;border: 1px solid #ccc;border-radius: 5px;">
+                            <p id="fact">Here's an interesting fact!</p>
+                            <button id="fetchFactBtn" style="border-radius: 10px; cursor: pointer;font-size: 16px; padding: 10px 15px; margin: 5px 0;">Fetch New Fact</button>
+                        </div>
+                    </div>
+            </section>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-        crossorigin="anonymous">
-        </script>
-    <script src="/script.js"></script>
+  </div>
 
-
-    
-
-    <a href="/">Go back to home</a>
-    <a href="/logout">Logout</a>
-
+  <script>
+        const readMoreBtn = document.getElementById('readMoreBtn');
+        const moreContent = document.getElementById('moreContent');
+        const fetchFactBtn = document.getElementById('fetchFactBtn');
+        const factParagraph = document.getElementById('fact');
+        readMoreBtn.addEventListener('click', () => {
+            if (moreContent.style.display === 'none' || moreContent.style.display === '') {
+                moreContent.style.display = 'block'; 
+                readMoreBtn.textContent = 'Read Less'; 
+            } else {
+                moreContent.style.display = 'none'; 
+                readMoreBtn.textContent = 'Read More'; 
+            }
+        });
+        fetchFactBtn.addEventListener('click', () => {
+            const facts = [
+                "Creators of this site are loves to eat.",
+                "Student's know how to cook well!",
+                "Bananas are berries, but strawberries aren't.",
+                "Hello world, i am POTATO.",
+                "All i want to say eat healthy food."
+            ];
+            const randomFact = facts[Math.floor(Math.random() * facts.length)];
+            factParagraph.textContent = randomFact;
+        });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+  crossorigin="anonymous">
+  </script>
+  <script src="js/script.js"></script>
+  <script src="js/theme.js" defer></script>
 </body>
 </html>

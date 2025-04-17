@@ -36,17 +36,17 @@ app.use(session({
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// 📌 Middleware to pass authentication status to all EJS files
+// Middleware to pass authentication status to all EJS files
 app.use((req, res, next) => {
-    console.log(`📌 Request: ${req.method} ${req.url} | JWT:`, req.session.token || "No token set");
+    console.log(`Request: ${req.method} ${req.url} | JWT:`, req.session.token || "No token set");
     res.locals.isAuthenticated = !!req.session.userId; // True if logged in
     next();
 });
 
 // Подключение к MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('✅ Подключено к MongoDB Atlas'))
-    .catch(err => console.error('❌ Ошибка подключения:', err));
+    .then(() => console.log('Подключено к MongoDB Atlas'))
+    .catch(err => console.error('Ошибка подключения:', err));
 
 // Определяем схему пользователя
 const userSchema = new mongoose.Schema({
@@ -88,14 +88,14 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// 📌 Маршруты
+// Маршруты
 app.get("/recipes", (req, res) => res.render("recipes"));
 app.get("/guide", (req, res) => res.render("guide"));
 app.get("/aboutus", (req, res) => res.render("aboutus"));
 app.get("/contact", (req, res) => res.render("contact"));
 app.get("/settings", (req, res) => res.render("settings"));
 
-// 📌 Регистрация
+// Регистрация
 app.get('/register', (req, res) => res.render('register'));
 app.post('/register', async (req, res) => {
     try {
@@ -109,10 +109,10 @@ app.post('/register', async (req, res) => {
     }
 });
 
-// 📌 Вход (Login)
+// Вход (Login)
 app.get('/login', (req, res) => res.render('login'));
-// 📌 Вход (Login) с перенаправлением
-// 📌 Вход (Login) с логированием JWT
+// Вход (Login) с перенаправлением
+// Вход (Login) с логированием JWT
 app.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -122,21 +122,21 @@ app.post('/login', async (req, res) => {
             return res.status(401).send('Неверные учетные данные');
         }
 
-        // ✅ Log JWT before setting
+        // Log JWT before setting
         console.log("🔹 JWT before login:", req.session.token || "No token set");
 
-        // ✅ Создаем JWT-токен
+        // Создаем JWT-токен
         const token = jwt.sign({ id: user._id }, jwtSecret, { expiresIn: '1h' });
 
-        // ✅ Сохраняем ID пользователя в сессии
+        // Сохраняем ID пользователя в сессии
         req.session.userId = user._id;
         req.session.userName = user.name;
         req.session.token = token;
 
-        // ✅ Log JWT after setting
+        // Log JWT after setting
         console.log("✅ JWT after login:", token);
 
-        // ✅ Перенаправляем на главную страницу
+        // Перенаправляем на главную страницу
         res.redirect('/');
     } catch (err) {
         console.error('❌ Ошибка сервера:', err);
@@ -144,7 +144,7 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// 📌 Настройка 2FA
+// Настройка 2FA
 app.get('/setup-2fa', requireAuth, async (req, res) => {
     const user = await User.findById(req.session.userId);
     if (!user) return res.redirect('/login');
@@ -162,7 +162,7 @@ app.get('/setup-2fa', requireAuth, async (req, res) => {
     });
 });
 
-// 📌 Проверка OTP
+// Проверка OTP
 app.get('/verify-otp', requireAuth, (req, res) => res.render('verify-otp'));
 app.post('/verify-otp', requireAuth, async (req, res) => {
     const user = await User.findById(req.session.userId);
@@ -177,7 +177,7 @@ app.post('/verify-otp', requireAuth, async (req, res) => {
     res.redirect('/');
 });
 
-// 📌 Защищенный маршрут (Только после входа)
+// Защищенный маршрут (Только после входа)
 app.get('/', async (req, res) => {
     if (req.session.userId) { 
         // User is logged in
@@ -196,16 +196,13 @@ app.get('/', async (req, res) => {
 });
   
 
-// 📌 Выход из аккаунта
+// Выход из аккаунта
 app.get('/logout', (req, res) => {
     console.log("🚪 Logging out, clearing JWT:", req.session.token || "No token set");
     req.session.destroy(() => {
         res.redirect('/login');
     });
 });
-
-
-
 
 app.get('/profile', requireAuth, async (req, res) => {
     try {
@@ -224,7 +221,7 @@ app.get('/profile', requireAuth, async (req, res) => {
 });
 
 
-// 📌 Обновление пользователя
+// Обновление пользователя
 app.get('/users/update/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -240,7 +237,7 @@ app.get('/users/update/:id', async (req, res) => {
     }
 });
 
-// 📌 Удаление пользователя
+// Удаление пользователя
 app.post('/users/delete/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -252,6 +249,6 @@ app.post('/users/delete/:id', async (req, res) => {
     }
 });
 
-// 📌 Запуск сервера
+// Запуск сервера
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Сервер запущен на http://localhost:${PORT}`));

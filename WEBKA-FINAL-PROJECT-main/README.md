@@ -19,7 +19,7 @@ Follow these steps to get your development environment up and running:
 ### 1. Clone the Repository
 
 
-git clone https://github.com/yourusername/Webka2.git
+git clone https://github.com/yourusername/cook2.0
 
 2. Install Dependencies
 Navigate to the project directory and run the following command to install the required dependencies:
