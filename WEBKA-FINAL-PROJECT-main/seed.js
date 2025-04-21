@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Recipe = require("./models/Recipe"); // Подключаем модель рецептов
 
-const MONGO_URI = "mongodb+srv://assbreaker2023:hello123@cluster0.1enst.mongodb.net/hello?retryWrites=true&w=majority";
+const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI)
     .then(() => console.log("Подключено к MongoDB"))
